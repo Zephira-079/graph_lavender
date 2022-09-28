@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>graph</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: lavender;
+        }
+        .horizontal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            height: 1px;
+            width: 100vw;
+
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .vertical {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            height: 100vh;
+            width: 1px;
+            
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .h-marker {
+            position: absolute;
+
+            height: 20px;
+            width: 2px;
+
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .v-marker {
+            position: absolute;
+
+            height: 2px;
+            width: 20px;
+
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .dot {
+            position: absolute;
+
+            height: 5px;
+            width: 5px;
+
+            background-color: red;
+
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="vertical"></div>
+    <div class="horizontal"></div>
+    <script>
+        const body = document.body
+        const width = Math.ceil(innerWidth/2)
+        const height = Math.ceil(innerHeight/2)
+
+        const marker_range = 100
+        const multiplier = 10
+        const interval = 1
+
+        const dot_size = 10
+
+        function dot(x,y) {
+            const dot = document.createElement("div")
+            dot.setAttribute("class","dot")
+            dot.style.top = `calc(50% + ${-y * multiplier}px)`
+            dot.style.left = `calc(50% + ${x * multiplier}px)`
+            dot.style.height = `${dot_size}px`
+            dot.style.width = `${dot_size}px`
+            dot.style.transform = `translate(-50%,-50%)`
+
+            body.appendChild(dot)
+        }
+        function h_marker(x,y) {
+            const marker = document.createElement("div")
+            marker.setAttribute("class","h-marker")
+            marker.style.top = `calc(50% + ${-y}px)`
+            marker.style.left = `calc(50% + ${x}px)`
+            marker.style.transform = `translate(-50%,-50%)`
+
+            body.appendChild(marker)
+        }
+        function v_marker(x,y) {
+            const marker = document.createElement("div")
+            marker.setAttribute("class","v-marker")
+            marker.style.top = `calc(50% + ${-y}px)`
+            marker.style.left = `calc(50% + ${x}px)`
+            marker.style.transform = `translate(-50%,-50%)`
+
+            body.appendChild(marker)
+        }
+        for(let x = 0; x < width; x+= marker_range){
+            h_marker(x,0)
+            h_marker(-x,0)
+        }
+        for(let y = 0; y < height; y+= marker_range){
+            v_marker(0,y)
+            v_marker(0,-y)
+        }
+        for(let i = -100; i < 100; i += interval){
+            dot(i,i ** 2 + 6 * i + 9)
+        }
+
+
+    </script>
+</body>
+</html>
